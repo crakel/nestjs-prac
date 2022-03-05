@@ -1,3 +1,4 @@
+import { IsNotEmpty } from 'class-validator'; // pipe를 통한 유효성 체크
 // DTO란?
 // 계층간 데이터 교환을 위한 객체
 // DB에서 데이터를 얻어 Service나 Controller 등으로 보낼 때 사용하는 객체
@@ -9,6 +10,9 @@
 // 더 안정적인 코드, ts의 type으로도 사용
 
 export class CreateBoardDto {
+  @IsNotEmpty()
   title: string;
+
+  @IsNotEmpty()
   description: string;
 }
