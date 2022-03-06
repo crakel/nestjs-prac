@@ -4,11 +4,13 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { resourceLimits } from 'worker_threads';
 import { BoardStatus } from './board-status-enum';
 import { Board } from './boards.entity';
 import { BoardsService } from './boards.service';
@@ -30,33 +32,33 @@ export class BoardsController {
 
   constructor(private boardsService: BoardsService) {}
   // Service를 type으로 지정
-  // @Get('/')
-  // getAllBoard(): Board[] {
-  //   return this.boardsService.getAllBoards();
-  // }
+  @Get('/')
+  getAllBoard(): Promise<Board[]> {
+    return this.boardsService.getAllBoards();
+  }
 
   // // Nest는 @Body body를 이용해 req의 보내온 값을 가져올 수 있다
-  // @Post()
-  // @UsePipes(ValidationPipe)
-  // createBoard(@Body() createBoardDto: CreateBoardDto): Board {
-  //   return this.boardsService.createBoard(createBoardDto);
-  // }
+  @Post()
+  @UsePipes(ValidationPipe)
+  createBoard(@Body() createBoardDto: CreateBoardDto): Promise<Board> {
+    return this.boardsService.createBoard(createBoardDto);
+  }
 
   @Get('/:id')
-  getBoardById(@Param('id') id: number): Promise<Board> {
+  getBoardById(@Param('id', ParseIntPipe) id: number): Promise<Board> {
     return this.boardsService.getBoardById(id);
   }
 
-  // @Delete('/:id')
-  // deleteBoard(@Param('id') id: string): void {
-  //   this.boardsService.deleteBoard(id);
-  // }
+  @Delete('/:id')
+  deleteBoard(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.boardsService.deleteBoard(id);
+  }
 
-  // @Patch('/:id/status')
-  // updateBoardStatus(
-  //   @Param('id') id: string,
-  //   @Body('status', BoardStatusValidationPipe) status: BoardStatus,
-  // ): Board {
-  //   return this.boardsService.updateBoardStatus(id, status);
-  // }
+  @Patch('/:id/status')
+  updateBoardStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status', BoardStatusValidationPipe) status: BoardStatus,
+  ): Promise<Board> {
+    return this.boardsService.updateBoardStatus(id, status);
+  }
 }
