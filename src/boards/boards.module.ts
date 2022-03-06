@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { BoardsController } from './boards.controller';
+import { BoardRepository } from './boards.repository';
 import { BoardsService } from './boards.service';
 
 // Module 이란?
@@ -8,6 +10,7 @@ import { BoardsService } from './boards.service';
 
 // Provider를 사용하기 위해서는 Module에서 등록해야함
 @Module({
+  imports: [TypeOrmModule.forFeature([BoardRepository])],
   controllers: [BoardsController],
   providers: [BoardsService],
 })

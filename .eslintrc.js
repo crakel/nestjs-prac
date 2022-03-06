@@ -20,6 +20,7 @@ module.exports = {
       'error',
       {
           endOfLine: 'auto',
+          useTabs: false,
       },
     ],
     '@typescript-eslint/interface-name-prefix': 'off',
