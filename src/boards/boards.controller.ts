@@ -10,7 +10,6 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { resourceLimits } from 'worker_threads';
 import { BoardStatus } from './board-status-enum';
 import { Board } from './boards.entity';
 import { BoardsService } from './boards.service';
