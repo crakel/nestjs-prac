@@ -7,9 +7,11 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { BoardStatus } from './board-status-enum';
 import { Board } from './boards.entity';
 import { BoardsService } from './boards.service';
@@ -26,6 +28,7 @@ import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe'
 // 커스텀 파이프 구현방법 -> PipeTransform 인터페이스 구현
 // 모든 파이프는 파리미터 value와 metadata를 가진 transform() 메소드 필요
 @Controller('boards') // 라우팅 경로 localhost:port/boards
+@UseGuards(AuthGuard()) // Cotnroller Level로 AuthGuard 적용
 export class BoardsController {
   // boardsService: BoardsService; // Parameter 정의 -> private 접근제한자를 통해 자동으로 암묵적인 property로 선언됨
 
