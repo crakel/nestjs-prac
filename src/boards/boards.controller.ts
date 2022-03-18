@@ -12,7 +12,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { userInfo } from 'os';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
 import { BoardStatus } from './board-status-enum';
@@ -38,8 +37,8 @@ export class BoardsController {
   constructor(private boardsService: BoardsService) {}
   // Service를 type으로 지정
   @Get('/')
-  getAllBoard(): Promise<Board[]> {
-    return this.boardsService.getAllBoards();
+  getAllBoard(@GetUser() user: User): Promise<Board[]> {
+    return this.boardsService.getAllBoards(user);
   }
 
   // // Nest는 @Body body를 이용해 req의 보내온 값을 가져올 수 있다

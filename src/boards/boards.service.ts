@@ -19,6 +19,8 @@ import { User } from 'src/auth/user.entity';
 
 // typeOrm 에서 findeONe 메소드 기본 제공
 // async await을 이용해서 DB 작업이 끝난 후 결과 값을 받음
+
+// create
 @Injectable()
 export class BoardsService {
   constructor(
@@ -26,8 +28,13 @@ export class BoardsService {
     private boardRepository: BoardRepository,
   ) {}
 
-  async getAllBoards(): Promise<Board[]> {
-    return this.boardRepository.find();
+  async getAllBoards(user: User): Promise<Board[]> {
+    const query = this.boardRepository.createQueryBuilder('board'); // board == table name
+
+    query.where('board.userId = :userId', { userId: user.id });
+
+    const boards = await query.getMany();
+    return boards;
   }
 
   async createBoard(
