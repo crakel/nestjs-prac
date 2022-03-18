@@ -9,7 +9,9 @@ import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    // 유저를 인증하기 위해 사용할 기본 strategy를 명시, 여기는 jwt
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    // jwt 인증 부분을 담당, 그리고 주로 sign() 을 위한 부분.
     JwtModule.register({
       secret: 'Secret1234',
       signOptions: {

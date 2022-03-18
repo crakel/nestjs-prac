@@ -36,7 +36,7 @@ export class AuthController {
   }
 
   @Post('/test')
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   test(@GetUser() user: User) {
     // 커스텀 데코레이터 GetUser 사용
     console.log('user', user);
