@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as config from 'config';
 
 // 로그의 종류
 // log - 중요한 정보의 범용 로깅
@@ -9,8 +10,11 @@ import { AppModule } from './app.module';
 // debug - 오류 발생시 로직을 디버그하는 데 도움이되는 유용한 정보
 // verbose - 응용 프로그램의 동작에 대한 통찰력 제공
 async function bootstrap() {
-  const port = 3000;
   const app = await NestFactory.create(AppModule);
+
+  const serverConfig = config.get('server');
+  const port = serverConfig.port;
+
   await app.listen(port);
   Logger.log(`Application running on port ${port}`);
 }

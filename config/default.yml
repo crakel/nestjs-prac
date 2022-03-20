@@ -1,0 +1,15 @@
+# Config
+# default.yml : 기본 설정 (개발 환경 설정이나 운영 환경 설정에도 적용)
+# development.yml : default.yml 에서 설정한 것 + 개발 환경에서 필요한 정보
+# production.yml : default.yml 에서 설정한 것 + 운영 환경에서 필요한 정보
+server: 
+  port: 3000
+
+db:
+  type: 'mysql'
+  port: 3306
+  database: 'nestjs-prac'
+
+jwt:
+  expiresIn: 3600
+

@@ -1,0 +1,8 @@
+db:
+  host: 'localhost'
+  username: 'root'
+  password: 'root'
+  synchronize: true # entity 새롭게 생성 여부
+
+jwt:
+  secret: 'Secret1234'
