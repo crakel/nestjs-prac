@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   ParseIntPipe,
   Patch,
@@ -33,11 +34,12 @@ import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe'
 @UseGuards(AuthGuard('jwt')) // Cotnroller Level로 AuthGuard 적용
 export class BoardsController {
   // boardsService: BoardsService; // Parameter 정의 -> private 접근제한자를 통해 자동으로 암묵적인 property로 선언됨
-
+  private logger = new Logger('BoardsController');
   constructor(private boardsService: BoardsService) {}
   // Service를 type으로 지정
   @Get('/')
   getAllBoard(@GetUser() user: User): Promise<Board[]> {
+    this.logger.verbose(`User ${user.username} trying to get all boards`);
     return this.boardsService.getAllBoards(user);
   }
 
@@ -48,6 +50,8 @@ export class BoardsController {
     @Body() createBoardDto: CreateBoardDto,
     @GetUser() user: User,
   ): Promise<Board> {
+    this.logger.verbose(`User ${user.username} creating a new board.
+    PayLoad: ${JSON.stringify(createBoardDto)}`);
     return this.boardsService.createBoard(createBoardDto, user);
   }
 
